@@ -28,6 +28,15 @@ public class MongoMovieRepository {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    /*
+     * db.imdb.find({})
+     
+    public boolean isMongoEmpty() {
+        
+    }
+
+    */
+
  // TODOx: Task 2.3
  // You can add any number of parameters and return any type from the method
  // You can throw any checked exceptions from the method
@@ -47,11 +56,11 @@ public class MongoMovieRepository {
         for (JsonObject m : movies) {
             docsToInsert.add(jsonObjToDoc(m));
         }
-
+        
         Collection<Document> newDocs = mongoTemplate.insert(docsToInsert, IMDB_COLLECTION);
 
         // Check if all the docs are added
-        return newDocs.size() == 25;
+        return newDocs.size() > 0;
     }
 
     private Document jsonObjToDoc(JsonObject m) {

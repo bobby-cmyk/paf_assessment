@@ -54,6 +54,8 @@ public class Dataloader{
 
       String line = br.readLine();
 
+      System.out.println(line);
+
       List<JsonObject> movies = new ArrayList<>();
 
       while (line != null) {
@@ -66,6 +68,8 @@ public class Dataloader{
           //TODO -> impute missing attributes
           movies.add(movieObj);
         }
+
+        line = br.readLine();
       }
 
       zf.close();
@@ -78,6 +82,7 @@ public class Dataloader{
       System.out.println(">>> Finish inserting to sql and mongodb\n");
       
     }
+
   }
 
   private int getYear(String dateString) {
@@ -85,7 +90,6 @@ public class Dataloader{
     LocalDate date = LocalDate.parse(dateString, fmt);
     return date.getYear();
   }
-
 
   private void batchInsertMovies(List<JsonObject> movies, int partitionSize) {
     int counter = 0;
@@ -96,6 +100,7 @@ public class Dataloader{
       }
       catch (RuntimeException e) {
         Document errorDoc = createErrorDoc(movies, e.getMessage());
+        System.out.println("Error logged");
         movieSvc.logError(errorDoc);
       }
       // Keep track of which batch

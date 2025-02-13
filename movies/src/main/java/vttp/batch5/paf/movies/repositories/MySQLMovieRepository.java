@@ -51,7 +51,7 @@ public class MySQLMovieRepository {
 
     int added[] = sqlTemplate.batchUpdate(SQL_INSERT, params);
 
-    return added.length == 25;
+    return added.length > 0;
   }
   
   // DONE TASK 3
